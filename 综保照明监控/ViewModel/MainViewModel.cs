@@ -33,6 +33,8 @@ namespace 综保照明监控.ViewModel
 {
     public class MainViewModel : ViewModelBase
     {
+        private TimeSpan _timeLength = new TimeSpan(0, 0, 60);
+
         public MainViewModel()
         {
             TempDataPoints = new ObservableCollection<DataPoint>();
@@ -46,8 +48,16 @@ namespace 综保照明监控.ViewModel
             var series4= new LineSeries { Title = "磁启4", MarkerType = MarkerType.Star, Smooth = true, MarkerStroke = OxyColors.LimeGreen };
             var series5 = new LineSeries { Title = "磁启5", MarkerType = MarkerType.Circle, Smooth = true, MarkerStroke = OxyColors.Yellow };
             var series6 = new LineSeries { Title = "磁启6", MarkerType = MarkerType.Star, Smooth = true, MarkerStroke = OxyColors.LightGoldenrodYellow };
+            
+
             var dateTimeAxis1 = new DateTimeAxis();
             dateTimeAxis1.Title = "Time";
+
+            var beginTime = DateTime.Now - _timeLength;
+            var endTime = beginTime + _timeLength;
+            var dMinX = beginTime;
+            var dMaxX = endTime;
+
             Model.Axes.Add(dateTimeAxis1);
             Model.Series.Add(series1);
             Model.Series.Add(series2);
@@ -75,6 +85,9 @@ namespace 综保照明监控.ViewModel
                             series4.Points.RemoveAt(0);
                             series5.Points.RemoveAt(0);
                             series6.Points.RemoveAt(0);
+
+                            dateTimeAxis1.Minimum = DateTimeAxis.ToDouble(dMinX);
+                            dateTimeAxis1.Maximum = DateTimeAxis.ToDouble(dMaxX);
                         }
                         Model.InvalidatePlot(true);
                         Thread.Sleep(1000);
@@ -109,6 +122,11 @@ namespace 综保照明监控.ViewModel
             var series11 = new LineSeries { Title = "综保5", MarkerType = MarkerType.Circle, Smooth = true, MarkerStroke = OxyColors.Yellow };
             var dateTimeAxis2 = new DateTimeAxis();
             dateTimeAxis2.Title = "Time";
+            var beginTime2 = DateTime.Now - _timeLength;
+            var endTime2 = beginTime + _timeLength;
+            var dMinX2 = beginTime;
+            var dMaxX2 = endTime;
+
             Model2.Axes.Add(dateTimeAxis2);
             Model2.Series.Add(series7);
             Model2.Series.Add(series8);
@@ -133,6 +151,8 @@ namespace 综保照明监控.ViewModel
                             series9.Points.RemoveAt(0);
                             series10.Points.RemoveAt(0);
                             series11.Points.RemoveAt(0);
+                            dateTimeAxis2.Minimum = DateTimeAxis.ToDouble(dMinX2);
+                            dateTimeAxis2.Maximum = DateTimeAxis.ToDouble(dMaxX2);
                         }
                         Model2.InvalidatePlot(true);
                         Thread.Sleep(1000);
@@ -162,6 +182,11 @@ namespace 综保照明监控.ViewModel
             var series12 = new LineSeries { Title = "馈电1", MarkerType = MarkerType.Circle, Smooth = true };
             var dateTimeAxis3 = new DateTimeAxis();
             dateTimeAxis3.Title = "Time";
+            var beginTime3 = DateTime.Now - _timeLength;
+            var endTime3 = beginTime + _timeLength;
+            var dMinX3 = beginTime;
+            var dMaxX3 = endTime;
+
             Model3.Axes.Add(dateTimeAxis3);
             Model3.Series.Add(series12);
             Random rd3 = new Random();
@@ -174,6 +199,8 @@ namespace 综保照明监控.ViewModel
                         if (series12.Points.Count > 100)
                         {
                             series12.Points.RemoveAt(0);
+                            dateTimeAxis3.Minimum = DateTimeAxis.ToDouble(dMinX3);
+                            dateTimeAxis3.Maximum = DateTimeAxis.ToDouble(dMaxX3);
                         }
                         Model3.InvalidatePlot(true);
                         Thread.Sleep(1000);
